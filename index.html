@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BETOX.GR</title>
+  <meta name="description" content="BETOX Splash — Luxury black/gold/white intro με particles και αυτόματη μετάβαση." />
+  <style>
+/* BETOX Splash — Plain HTML/CSS/JS (Black/Gold/White) */
+:root{
+  --gold:#e5c763; --gold2:#c9a227; --gold3:#b48a1f;
+  --bg:#0b0b0b; --ink:#f2f2f2;
+}
+*{box-sizing:border-box} html,body{margin:0;padding:0}
+body{background:#000;color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+
+.splash{position:relative;min-height:100vh;overflow:hidden;display:grid;place-items:center;background:#0d0d0d;color:#eee}
+
+/* backdrop gradient */
+.backdrop{position:absolute;inset:0;background:linear-gradient(180deg,#000,rgba(10,10,10,.95) 25%, rgba(10,10,10,.98) 65%, #000);z-index:0}
+
+/* gold overlay */
+.gold-overlay{position:absolute;inset:0;pointer-events:none;mix-blend:screen;opacity:.22;z-index:1;
+  background:
+    radial-gradient(600px 220px at 20% 30%, rgba(229,199,99,.12), transparent 40%),
+    radial-gradient(520px 200px at 80% 70%, rgba(201,162,39,.12), transparent 35%);
+}
+
+/* particles */
+#particles{position:absolute;inset:0;z-index:2;pointer-events:none}
+#particles span{position:absolute;display:inline-block;border-radius:999px;background:rgba(229,199,99,.12);filter:blur(6px);animation:pulse 2.6s ease-in-out infinite alternate}
+@keyframes pulse{from{opacity:.35;transform:scale(.98)}to{opacity:.6;transform:scale(1.02)}}
+
+/* center content */
+.center{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px}
+.emblem-wrap{position:relative;margin-bottom:18px}
+.emblem{display:grid;place-items:center;height:88px;width:88px;border-radius:18px;background:rgba(24,24,24,.7);border:1px solid rgba(155,124,34,.4);box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.crown{height:48px;width:48px;fill:var(--gold)}
+.glow{position:absolute;inset:-10px;border-radius:24px;background:linear-gradient(90deg,var(--gold3),var(--gold2) 60%,var(--gold));filter:blur(22px);opacity:.35}
+
+.title{font-size:clamp(32px,6vw,64px);font-weight:900;letter-spacing:.5px;margin:0}
+.title .gold{color:var(--gold)}
+.subtitle{margin:10px 0 0;color:#d1d1d1;max-width:60ch}
+
+/* progress + button */
+.controls{margin-top:22px;display:flex;align-items:center;gap:18px}
+.ring{position:relative;height:48px;width:48px}
+.ring-svg{height:48px;width:48px;transform:rotate(-90deg)}
+.ring-label{position:absolute;inset:0;display:grid;place-items:center;font-size:12px;color:#bbb}
+
+.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:700;cursor:pointer;transition:.2s ease;
+     color:#111;background:linear-gradient(90deg,var(--gold3),var(--gold2) 60%,var(--gold));
+     box-shadow:0 10px 20px rgba(0,0,0,.35)}
+.btn:hover{opacity:.95}
+.btn:focus{outline:2px solid var(--gold);outline-offset:2px}
+
+/* vignette */
+.vignette{position:absolute;inset-x:0;bottom:0;height:140px;background:linear-gradient(to top, #000, transparent);z-index:2}
+
+</style>
+</head>
+<body>
+  <main class="splash">
+    <!-- BACKDROP GRADIENT -->
+    <div class="backdrop"></div>
+
+    <!-- GOLD NOISE/GRADIENT OVERLAY -->
+    <div class="gold-overlay"></div>
+
+    <!-- SOFT PARTICLES -->
+    <div id="particles"></div>
+
+    <!-- CENTER CONTENT -->
+    <section class="center">
+      <div class="emblem-wrap">
+        <div class="emblem">
+          <!-- Crown SVG (inline, no libs) -->
+          <svg class="crown" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 7l4 3 5-6 5 6 4-3-2 10H5L3 7zM5 19h14v2H5z" />
+          </svg>
+        </div>
+        <div class="glow"></div>
+      </div>
+
+      <h1 class="title">BETOX <span class="gold">GREECE</span></h1>
+      <p class="subtitle">Indoor and outdoor areas • Commercial Spaces </p>
+
+      <div class="controls">
+        <!-- Progress ring -->
+        <div class="ring">
+          <svg viewBox="0 0 36 36" class="ring-svg">
+            <path d="M18 2a16 16 0 1 1 0 32 16 16 0 0 1 0-32" fill="none" stroke="#2a2a2a" stroke-width="3" />
+            <path id="ring-progress" d="M18 2a16 16 0 1 1 0 32 16 16 0 0 1 0-32"
+                  fill="none" stroke="#e5c763" stroke-linecap="round" stroke-width="3"
+                  stroke-dasharray="100" stroke-dashoffset="100" />
+          </svg>
+          <span id="ring-label" class="ring-label">0%</span>
+        </div>
+
+        <!-- Enter button -->
+        <button id="enterBtn" class="btn">Enter</button>
+      </div>
+    </section>
+
+    <!-- Bottom vignette -->
+    <div class="vignette"></div>
+  </main>
+
+  <script>
+// BETOX Splash logic (no frameworks)
+
+// --- SETTINGS ---
+const DEST_URL = "file:///C:/Users/nikit/OneDrive/Desktop/betox-luxe-ultra-plain/home.html"; // <-- ΑΛΛΑΞΕ το στο URL της αρχικής σου σελίδας (π.χ. '/luxe' ή 'index.html')
+const AUTO_REDIRECT_MS = 3500;  // χρόνος μέχρι αυτόματη μετάβαση (ms)
+
+// --- Particles ---
+(function makeParticles(){
+  const holder = document.getElementById('particles');
+  for(let i=0;i<24;i++){
+    const s = document.createElement('span');
+    const size = 8 + (i % 5) * 3;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = ((i * 41) % 100) + '%';
+    s.style.top = ((i * 17) % 100) + '%';
+    s.style.animationDuration = (2 + (i % 5) * 0.6) + 's';
+    holder.appendChild(s);
+  }
+})();
+
+// --- Progress ring + redirect ---
+let entered = false;
+const ring = document.getElementById('ring-progress');
+const label = document.getElementById('ring-label');
+const enterBtn = document.getElementById('enterBtn');
+
+function setProgress(p){ // p in [0..1]
+  const pct = Math.max(0, Math.min(1, p));
+  const val = Math.round(pct * 100);
+  ring.setAttribute('stroke-dashoffset', String(100 - val));
+  label.textContent = val + '%';
+}
+
+(function animate(){
+  const total = AUTO_REDIRECT_MS;
+  const start = performance.now();
+  function loop(t){
+    const elapsed = t - start;
+    const p = Math.min(1, elapsed / total);
+    if(!entered){
+      setProgress(p);
+      if(p < 1) requestAnimationFrame(loop);
+      else handleEnter();
+    }
+  }
+  requestAnimationFrame(loop);
+})();
+
+function handleEnter(){
+  if(entered) return;
+  entered = true;
+  // μικρή καθυστέρηση για smooth exit, αν θες μπορείς να προσθέσεις CSS class εδώ
+  setTimeout(()=>{ window.location.assign(DEST_URL); }, 200);
+}
+
+enterBtn.addEventListener('click', handleEnter);
+
+</script>
+</body>
+</html>

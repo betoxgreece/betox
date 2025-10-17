@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Επικοινωνία | BETOX</title>
+  <style>
+    :root{
+      --bg:#0b0b0b; --panel:#111; --muted:#bdbdbd; --text:#f2f2f2;
+      --gold:#e5c763; --line:rgba(229,199,99,.18); --shadow:0 10px 30px rgba(0,0,0,.4);
+    }
+    *{box-sizing:border-box}
+    body {
+  margin: 0;
+  background: 
+    linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), /* σκοτεινό φίλτρο */
+    url("photo1.jpg") center/cover no-repeat fixed; /* η φωτογραφία */
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+    /* Header (reveal on scroll) */
+    .site-header{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:saturate(1.2) blur(8px);
+      background:rgba(0,0,0,0);border-bottom:1px solid var(--line);transform:translateY(-100%);opacity:0;
+      transition:transform .4s ease,opacity .4s ease,background .2s ease}
+    .site-header.show{transform:translateY(0);opacity:1;background:rgba(0,0,0,.7)}
+    .site-header-inner{max-width:1200px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:900;letter-spacing:.3px}
+    .brand .mark{width:30px;height:30px;display:grid;place-items:center;border-radius:9px;border:1px solid rgba(229,199,99,.45);background:rgba(24,24,24,.7)}
+    .brand .mark svg{width:18px;height:18px;fill:var(--gold)}
+    .brand .name{font-size:20px}
+    nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}
+    nav a{color:var(--text);text-decoration:none;font-weight:600;opacity:.92}
+    nav a:hover{opacity:1}
+    .burger{display:none;background:transparent;border:0;cursor:pointer}
+    .burger span{display:block;width:24px;height:2px;background:var(--text);margin:5px 0}
+    .mobile-nav{display:none}
+    @media (max-width:900px){
+      nav{display:none}.burger{display:block}
+      .mobile-nav{position:fixed;top:56px;left:12px;right:12px;z-index:60;background:rgba(10,10,10,.96);border:1px solid var(--line);border-radius:14px;display:none;box-shadow:var(--shadow)}
+      .mobile-nav.open{display:block}
+      .mobile-nav ul{list-style:none;margin:0;padding:8px}
+      .mobile-nav a{display:block;padding:12px 10px;text-decoration:none;color:var(--text);font-weight:600}
+      .mobile-nav a + a{border-top:1px solid var(--line)}
+    }
+
+    main{padding-top:84px}
+    section{padding:72px 16px;border-top:1px solid rgba(255,255,255,.02)}
+    .container{max-width:1200px;margin:0 auto}
+    .title{font-size:clamp(28px,4vw,44px);margin:0 0 10px}
+    .sub{color:var(--muted);margin:0 0 22px;max-width:75ch}
+
+    /* Info cards */
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
+    .card{grid-column:span 4;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+    .card h3{margin:0 0 6px}
+    .card p{margin:0;color:var(--muted)}
+    .cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:800}
+    .btn.gold{background:var(--gold);color:#000}
+    .btn.ghost{border:1px solid var(--line);color:var(--text)}
+    @media (max-width:1100px){.card{grid-column:span 6}} @media (max-width:700px){.card{grid-column:span 12}}
+
+    /* Contact form */
+    .form-wrap{display:grid;gap:16px;grid-template-columns:repeat(12,1fr);margin-top:16px}
+    .form{grid-column:span 7;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+    .map{grid-column:span 5;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:360px}
+    @media (max-width:900px){.form{grid-column:span 12}.map{grid-column:span 12}}
+    input,textarea{width:100%;background:#111;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px}
+    button.btn-send{background:var(--gold);color:#000;font-weight:900;border:0;border-radius:12px;padding:12px 16px;cursor:pointer}
+    .fine{color:var(--muted);font-size:13px}
+
+    /* Toast */
+    #successBox{position:fixed;top:20px;right:20px;z-index:999;background:#1b1b1b;color:var(--gold);
+      padding:14px 18px;border-radius:10px;border:1px solid var(--line);box-shadow:var(--shadow);font-weight:700;display:none}
+
+    /* Footer */
+    footer{padding:40px 16px;background:#000;color:#bbb;text-align:center;border-top:1px solid var(--line)}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="site-header-inner">
+      <a href="index.html" class="brand">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 7l4 3 5-6 5 6 4-3-2 10H5L3 7zM5 19h14v2H5z"/></svg>
+        </span>
+        <span class="name">BETOX <span style="color:var(--gold)">GREECE</span></span>
+      </a>
+      <nav aria-label="Κύριο μενού">
+        <ul>
+          <li><a href="index.html#services">Υπηρεσίες</a></li>
+          <li><a href="index.html#projects">Έργα</a></li>
+          <li><a href="index.html#contact">Αρχική Επικοινωνία</a></li>
+        </ul>
+      </nav>
+      <button class="burger" id="burger" aria-label="Μενού"><span></span><span></span><span></span></button>
+    </div>
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <ul>
+        <li><a href="index.html#services">Υπηρεσίες</a></li>
+        <li><a href="index.html#projects">Έργα</a></li>
+        <li><a href="index.html#contact">Αρχική Επικοινωνία</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <!-- Intro -->
+    <section>
+      <div class="container">
+        <h1 class="title">📞 Επικοινωνία</h1>
+        <p class="sub">Χρειάζεσαι προσφορά ή τεχνικές πληροφορίες; Συμπλήρωσε τη φόρμα ή κάλεσέ μας — απαντάμε άμεσα.</p>
+
+        <!-- Quick info cards -->
+        <div class="grid">
+          <div class="card">
+            <h3>Τηλέφωνο</h3>
+            <p>69ΧΧΧΧΧΧΧΧ</p>
+            <div class="cta-row">
+              <a class="btn gold" href="tel:69XXXXXXXX">Κλήση τώρα</a>
+              <a class="btn ghost" href="https://wa.me/30XXXXXXXXXX" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Email</h3>
+            <p>info@betox.gr</p>
+            <div class="cta-row">
+              <a class="btn gold" href="mailto:info@betox.gr">Στείλε email</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Τοποθεσία</h3>
+            <p>Αττική & Πελοπόννησος (on-site)</p>
+            <div class="cta-row">
+              <a class="btn ghost" href="#map">Δες στο χάρτη</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form + Map -->
+        <div class="form-wrap">
+          <form id="contactForm" class="form">
+            <h3 style="margin-top:0">Φόρμα Επικοινωνίας</h3>
+            <input type="text" name="name" placeholder="Όνομα" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <textarea name="message" rows="6" placeholder="Πες μας τι χρειάζεσαι…" required></textarea>
+            <label class="fine"><input type="checkbox" required> Συμφωνώ να επικοινωνήσετε μαζί μου σχετικά με το αίτημά μου.</label>
+            <br>
+            <button class="btn-send" type="submit">Αποστολή</button>
+            <div class="fine">Χρησιμοποιούμε τα στοιχεία σου μόνο για να απαντήσουμε στο μήνυμά σου.</div>
+          </form>
+
+          <div class="map" id="map">
+            <!-- Βάλε τη δική σου διεύθυνση στο src -->
+            <iframe title="Χάρτης" width="100%" height="100%" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31497.838!2d23.7275!3d37.9838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0:0x0!2z!5e0!3m2!1sel!2sgr!4v0000000000"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ωράριο & FAQ -->
+    <section>
+      <div class="container">
+        <div class="grid">
+          <div class="card" style="grid-column:span 6">
+            <h3>Ωράριο</h3>
+            <p>Δευτ–Παρ: 08:00–20:00 • Σάβ: 09:00–16:00 • Κυρ: κλειστά</p>
+          </div>
+          <div class="card" style="grid-column:span 6">
+            <h3>Συχνές ερωτήσεις</h3>
+            <p><strong>Πότε θα σας καλέσουμε;</strong> Συνήθως εντός 24 ωρών.</p>
+            <p><strong>Κάνετε δωρεάν εκτίμηση;</strong> Ναι, σε όλη την περιοχή κάλυψης.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast -->
+  <div id="successBox">✅ Ευχαριστούμε! Το μήνυμά σου στάλθηκε.</div>
+
+  <footer>
+    © BETOX GREECE — All rights reserved.
+  </footer>
+
+  <script>
+    // ===== Header reveal on scroll =====
+    const header = document.getElementById("siteHeader");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 80) header.classList.add("show");
+      else header.classList.remove("show");
+    });
+
+    // ===== Mobile menu =====
+    const burger = document.getElementById("burger");
+    const mobileNav = document.getElementById("mobileNav");
+    if (burger) burger.addEventListener("click", ()=> {
+      const open = mobileNav.classList.toggle("open");
+      mobileNav?.setAttribute("aria-hidden", String(!open));
+    });
+
+    // ===== Contact form (instant toast + background send via Formspree) =====
+    const form = document.getElementById("contactForm");
+    const box = document.getElementById("successBox");
+    const FORM_ENDPOINT = "https://formspree.io/f/mblzwzvo"; // <-- ΒΑΛΕ ΤΟ ΔΙΚΟ ΣΟΥ ID
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Αμέσως εμφανίζεται το “Ευχαριστούμε!”
+      box.style.display = "block";
+      setTimeout(()=> box.style.display="none", 4000);
+
+      // Στέλνουμε στο background
+      const payload = {
+        name: form.name.value,
+        email: form.email.value,
+        message: form.message.value
+      };
+      fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: {"Content-Type":"application/json","Accept":"application/json"},
+        body: JSON.stringify(payload)
+      }).catch(()=>{});
+      form.reset();
+    });
+  </script>
+</body>
+</html>
