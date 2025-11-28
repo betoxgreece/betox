@@ -71,13 +71,6 @@
   height: 18px;
   fill: var(--gold);
 }
-.brand .name{font-size:20px}
-.site-header img.brand-logo {
-    height: 26px !important;
-    width: auto !important;
-    max-height: 26px !important;
-    object-fit: contain !important;
-}
 
 nav ul {
   list-style: none;
