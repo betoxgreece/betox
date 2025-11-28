@@ -51,7 +51,7 @@
      }
 
 .brand-logo {
-     height: 26px;   
+     height: 55px;   
      width: auto;
      display: block;
      }
@@ -71,6 +71,7 @@
   height: 18px;
   fill: var(--gold);
 }
+.brand .name{font-size:20px}
 
 nav ul {
   list-style: none;
