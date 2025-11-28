@@ -3,238 +3,185 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Επικοινωνία | BETOX</title>
+  <title>BETOX.GR</title>
+  <meta name="description" content="BETOX Splash — Luxury black/gold/white intro με particles και αυτόματη μετάβαση." />
   <style>
-    :root{
-      --bg:#0b0b0b; --panel:#111; --muted:#bdbdbd; --text:#f2f2f2;
-      --gold:#e5c763; --line:rgba(229,199,99,.18); --shadow:0 10px 30px rgba(0,0,0,.4);
-    }
-    *{box-sizing:border-box}
-    body {
-  margin: 0;
-  background: 
-    linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), /* σκοτεινό φίλτρο */
-    url("photo1.jpg") center/cover no-repeat fixed; /* η φωτογραφία */
-  color: var(--text);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  line-height: 1.5;
+/* BETOX Splash — Plain HTML/CSS/JS (Black/Gold/White) */
+:root{
+  --gold:#e5c763; --gold2:#c9a227; --gold3:#b48a1f;
+  --bg:#0b0b0b; --ink:#f2f2f2;
+}
+*{box-sizing:border-box} html,body{margin:0;padding:0}
+body{background:#000;color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+
+.splash{position:relative;min-height:100vh;overflow:hidden;display:grid;place-items:center;background:#0d0d0d;color:#eee}
+
+/* backdrop gradient */
+.backdrop{position:absolute;inset:0;background:linear-gradient(180deg,#000,rgba(10,10,10,.95) 25%, rgba(10,10,10,.98) 65%, #000);z-index:0}
+
+/* gold overlay */
+.gold-overlay{position:absolute;inset:0;pointer-events:none;mix-blend:screen;opacity:.22;z-index:1;
+  background:
+    radial-gradient(600px 220px at 20% 30%, rgba(229,199,99,.12), transparent 40%),
+    radial-gradient(520px 200px at 80% 70%, rgba(201,162,39,.12), transparent 35%);
 }
 
-    
-    .brand {
-     display: flex;
-     align-items: center;
-     gap: 10px;
-     }
+/* particles */
+#particles{position:absolute;inset:0;z-index:2;pointer-events:none}
+#particles span{position:absolute;display:inline-block;border-radius:999px;background:rgba(229,199,99,.12);filter:blur(6px);animation:pulse 2.6s ease-in-out infinite alternate}
+@keyframes pulse{from{opacity:.35;transform:scale(.98)}to{opacity:.6;transform:scale(1.02)}}
 
-    .brand-logo {
-     height: 55px;   
-     width: auto;
-     display: block;
-     }
-    .brand .mark{width:30px;height:30px;display:grid;place-items:center;border-radius:9px;border:1px solid rgba(229,199,99,.45);background:rgba(24,24,24,.7)} 
-    .brand .mark svg{width:18px;height:18px;fill:var(--gold)} 
-    .brand .name{font-size:20px}
-    .site-header{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:saturate(1.2) blur(8px);
-      background:rgba(0,0,0,0);border-bottom:1px solid var(--line);transform:translateY(-100%);opacity:0;
-      transition:transform .4s ease,opacity .4s ease,background .2s ease}
-    .site-header.show{transform:translateY(0);opacity:1;background:rgba(0,0,0,.7)}
-    .site-header-inner{max-width:1200px;margin:0 auto;padding:16px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-    nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}
-    nav a{color:var(--text);text-decoration:none;font-weight:600;opacity:.92}
-    nav a:hover{opacity:1}
-    .burger{display:none;background:transparent;border:0;cursor:pointer}
-    .burger span{display:block;width:24px;height:2px;background:var(--text);margin:5px 0}
-    .mobile-nav{display:none}
-    @media (max-width:900px){
-      nav{display:none}.burger{display:block}
-      .mobile-nav{position:fixed;top:56px;left:12px;right:12px;z-index:60;background:rgba(10,10,10,.96);border:1px solid var(--line);border-radius:14px;display:none;box-shadow:var(--shadow)}
-      .mobile-nav.open{display:block}
-      .mobile-nav ul{list-style:none;margin:0;padding:8px}
-      .mobile-nav a{display:block;padding:12px 10px;text-decoration:none;color:var(--text);font-weight:600}
-      .mobile-nav a + a{border-top:1px solid var(--line)}
-    }
+/* center content */
+.center{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px}
+.emblem-wrap{position:relative;margin-bottom:18px}
 
-    main{padding-top:84px}
-    section{padding:72px 16px;border-top:1px solid rgba(255,255,255,.02)}
-    .container{max-width:1200px;margin:0 auto}
-    .title{font-size:clamp(28px,4vw,44px);margin:0 0 10px}
-    .sub{color:var(--muted);margin:0 0 22px;max-width:75ch}
+/* ΕΔΩ: το κουτί φεύγει, μένει μόνο η εικόνα όμορφα */
+.emblem{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  /* χωρίς κουτί */
+  background:transparent;
+  border:none;
+  box-shadow:none;
+  padding:0;
+  height:auto;
+  width:auto;
+}
 
-    /* Info cards */
-    .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
-    .card{grid-column:span 4;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
-    .card h3{margin:0 0 6px}
-    .card p{margin:0;color:var(--muted)}
-    .cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:800}
-    .btn.gold{background:var(--gold);color:#000}
-    .btn.ghost{border:1px solid var(--line);color:var(--text)}
-    @media (max-width:1100px){.card{grid-column:span 6}} @media (max-width:700px){.card{grid-column:span 12}}
+.emblem img{
+  display:block;
+  max-width:160px;   /* ρύθμισε αν θες πιο μικρό/μεγάλο */
+  height:auto;
+}
 
-    /* Contact form */
-    .form-wrap{display:grid;gap:16px;grid-template-columns:repeat(12,1fr);margin-top:16px}
-    .form{grid-column:span 7;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
-    .map{grid-column:span 5;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:360px}
-    @media (max-width:900px){.form{grid-column:span 12}.map{grid-column:span 12}}
-    input,textarea{width:100%;background:#111;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px}
-    button.btn-send{background:var(--gold);color:#000;font-weight:900;border:0;border-radius:12px;padding:12px 16px;cursor:pointer}
-    .fine{color:var(--muted);font-size:13px}
+/* κρύβουμε το glow */
+.glow{display:none;}
 
-    /* Toast */
-    #successBox{position:fixed;top:20px;right:20px;z-index:999;background:#1b1b1b;color:var(--gold);
-      padding:14px 18px;border-radius:10px;border:1px solid var(--line);box-shadow:var(--shadow);font-weight:700;display:none}
+.title{font-size:clamp(32px,6vw,64px);font-weight:900;letter-spacing:.5px;margin:0}
+.title .gold{color:var(--gold)}
+.subtitle{margin:10px 0 0;color:#d1d1d1;max-width:60ch}
 
-    /* Footer */
-    footer{padding:40px 16px;background:#000;color:#bbb;text-align:center;border-top:1px solid var(--line)}
-  </style>
+/* progress + button */
+.controls{margin-top:22px;display:flex;align-items:center;gap:18px}
+.ring{position:relative;height:48px;width:48px}
+.ring-svg{height:48px;width:48px;transform:rotate(-90deg)}
+.ring-label{position:absolute;inset:0;display:grid;place-items:center;font-size:12px;color:#bbb}
+
+.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:700;cursor:pointer;transition:.2s ease;
+     color:#111;background:linear-gradient(90deg,var(--gold3),var(--gold2) 60%,var(--gold));
+     box-shadow:0 10px 20px rgba(0,0,0,.35)}
+.btn:hover{opacity:.95}
+.btn:focus{outline:2px solid var(--gold);outline-offset:2px}
+
+/* vignette */
+.vignette{position:absolute;inset-x:0;bottom:0;height:140px;background:linear-gradient(to top, #000, transparent);z-index:2}
+
+</style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-header" id="siteHeader">
-    <div class="site-header-inner">
-      <a href="home.html" class="brand">
-          <img src="betoxx1.png" alt="Betox logo" class="brand-logo">
-      </a>
-      <nav aria-label="Κύριο μενού">
-        <ul>
-          <li><a href="home.html#services">Υπηρεσίες</a></li>
-          <li><a href="home.html#portfolio">Έργα</a></li>
-          <li><a href="contact.html"">Επικοινωνία</a></li>
-        </ul>
-      </nav>
-      <button class="burger" id="burger" aria-label="Μενού"><span></span><span></span><span></span></button>
-    </div>
-    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-      <ul>
-        <li><a href="home.html#services">Υπηρεσίες</a></li>
-        <li><a href="home.html#portfolio">Έργα</a></li>
-        <li><a href="contact.html"">Επικοινωνία</a></li>
-      </ul>
-    </div>
-  </header>
+  <main class="splash">
+    <!-- BACKDROP GRADIENT -->
+    <div class="backdrop"></div>
 
-  <main>
-    <!-- Intro -->
-    <section>
-      <div class="container">
-        <h1 class="title">📞 Επικοινωνία </h1>
-        <p class="sub">Χρειάζεσαι προσφορά ή τεχνικές πληροφορίες; Συμπλήρωσε τη φόρμα ή κάλεσέ μας — απαντάμε άμεσα.</p>
+    <!-- GOLD NOISE/GRADIENT OVERLAY -->
+    <div class="gold-overlay"></div>
 
-        <!-- Quick info cards -->
-        <div class="grid">
-          <div class="card">
-            <h3>Τηλέφωνο</h3>
-            <p>69ΧΧΧΧΧΧΧΧ</p>
-            <div class="cta-row">
-              <a class="btn gold" href="tel:69XXXXXXXX">Κλήση τώρα</a>
-              <a class="btn ghost" href="https://wa.me/30XXXXXXXXXX" target="_blank" rel="noopener">WhatsApp</a>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Email</h3>
-            <p>info@betox.gr</p>
-            <div class="cta-row">
-              <a class="btn gold" href="mailto:info@betox.gr">Στείλε email</a>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Τοποθεσία</h3>
-            <p>Αττική & Πελοπόννησος (on-site)</p>
-            <div class="cta-row">
-              <a class="btn ghost" href="https://maps.app.goo.gl/hVhz7ZD3Wccw3KuD7">Δες στο χάρτη</a>
-            </div>
-          </div>
+    <!-- SOFT PARTICLES -->
+    <div id="particles"></div>
+
+    <!-- CENTER CONTENT -->
+    <section class="center">
+      <div class="emblem-wrap">
+        <div class="emblem">
+          <img src="betoxx1.png" alt="Betox logo">
+        </div>
+        <div class="glow"></div>
+      </div>
+
+      <h1 class="title">BETOX <span class="gold">GREECE</span></h1>
+      <p class="subtitle">Premium υφή και κορυφαία αντοχή — για χώρους που ξεχωρίζουν. </p>
+
+      <div class="controls">
+        <!-- Progress ring -->
+        <div class="ring">
+          <svg viewBox="0 0 36 36" class="ring-svg">
+            <path d="M18 2a16 16 0 1 1 0 32 16 16 0 0 1 0-32" fill="none" stroke="#2a2a2a" stroke-width="3" />
+            <path id="ring-progress" d="M18 2a16 16 0 1 1 0 32 16 16 0 0 1 0-32"
+                  fill="none" stroke="#e5c763" stroke-linecap="round" stroke-width="3"
+                  stroke-dasharray="100" stroke-dashoffset="100" />
+          </svg>
+          <span id="ring-label" class="ring-label">0%</span>
         </div>
 
-        <!-- Form + Map -->
-        <div class="form-wrap">
-          <form id="contactForm" class="form">
-            <h3 style="margin-top:0">Φόρμα Επικοινωνίας</h3>
-            <input type="text" name="name" placeholder="Όνομα" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <textarea name="message" rows="6" placeholder="Πες μας τι χρειάζεσαι…" required></textarea>
-            <label class="fine"><input type="checkbox" required> Συμφωνώ να επικοινωνήσετε μαζί μου σχετικά με το αίτημά μου.</label>
-            <br>
-            <button class="btn-send" type="submit">Αποστολή</button>
-            <div class="fine">Χρησιμοποιούμε τα στοιχεία σου μόνο για να απαντήσουμε στο μήνυμά σου.</div>
-          </form>
-
-          <div class="map" id="map">
-            <!-- Βάλε τη δική σου διεύθυνση στο src -->
-            <iframe title="Χάρτης" width="100%" height="100%" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d984.0760897528286!2d23.83119220207183!3d38.035513219739094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1993ede27f3b3%3A0x40d59fbf11756991!2sVernardou%2033%2C%20Vrilissia%20152%2035!5e1!3m2!1sen!2sgr!4v1760983486414!5m2!1sen!2sgr"></iframe>
-          </div>
-        </div>
+        <!-- Enter button -->
+        <button id="enterBtn" class="btn">Enter</button>
       </div>
     </section>
 
-    <!-- Ωράριο & FAQ -->
-    <section>
-      <div class="container">
-        <div class="grid">
-          <div class="card" style="grid-column:span 6">
-            <h3>Ωράριο</h3>
-            <p>Δευτ–Παρ: 08:00–20:00 • Σάβ: 09:00–16:00 • Κυρ: κλειστά</p>
-          </div>
-          <div class="card" style="grid-column:span 6">
-            <h3>Συχνές ερωτήσεις</h3>
-            <p><strong>Πότε θα σας καλέσουμε;</strong> Συνήθως εντός 24 ωρών.</p>
-            <p><strong>Κάνετε δωρεάν εκτίμηση;</strong> Ναι, σε όλη την περιοχή κάλυψης.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- Bottom vignette -->
+    <div class="vignette"></div>
   </main>
 
-  <!-- Toast -->
-  <div id="successBox">✅ Ευχαριστούμε! Το μήνυμά σου στάλθηκε.</div>
-
-  <footer>
-    © BETOX — All rights reserved.
-  </footer>
-
   <script>
-    // ===== Header reveal on scroll =====
-    const header = document.getElementById("siteHeader");
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 80) header.classList.add("show");
-      else header.classList.remove("show");
-    });
+// BETOX Splash logic (no frameworks)
 
-    // ===== Mobile menu =====
-    const burger = document.getElementById("burger");
-    const mobileNav = document.getElementById("mobileNav");
-    if (burger) burger.addEventListener("click", ()=> {
-      const open = mobileNav.classList.toggle("open");
-      mobileNav?.setAttribute("aria-hidden", String(!open));
-    });
+// --- SETTINGS ---
+// <-- ΑΛΛΑΞΕ το στο URL της αρχικής σου σελίδας (π.χ. '/luxe' ή 'index.html')
+const DEST_URL = "home/"; 
+const AUTO_REDIRECT_MS = 3500;  // χρόνος μέχρι αυτόματη μετάβαση (ms)
 
-    // ===== Contact form (instant toast + background send via Formspree) =====
-    const form = document.getElementById("contactForm");
-    const box = document.getElementById("successBox");
-    const FORM_ENDPOINT = "https://formspree.io/f/mblzwzvo"; // <-- ΒΑΛΕ ΤΟ ΔΙΚΟ ΣΟΥ ID
+// --- Particles ---
+(function makeParticles(){
+  const holder = document.getElementById('particles');
+  for(let i=0;i<24;i++){
+    const s = document.createElement('span');
+    const size = 8 + (i % 5) * 3;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = ((i * 41) % 100) + '%';
+    s.style.top = ((i * 17) % 100) + '%';
+    s.style.animationDuration = (2 + (i % 5) * 0.6) + 's';
+    holder.appendChild(s);
+  }
+})();
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+// --- Progress ring + redirect ---
+let entered = false;
+const ring = document.getElementById('ring-progress');
+const label = document.getElementById('ring-label');
+const enterBtn = document.getElementById('enterBtn');
 
-      // Αμέσως εμφανίζεται το “Ευχαριστούμε!”
-      box.style.display = "block";
-      setTimeout(()=> box.style.display="none", 4000);
+function setProgress(p){ // p in [0..1]
+  const pct = Math.max(0, Math.min(1, p));
+  const val = Math.round(pct * 100);
+  ring.setAttribute('stroke-dashoffset', String(100 - val));
+  label.textContent = val + '%';
+}
 
-      // Στέλνουμε στο background
-      const payload = {
-        name: form.name.value,
-        email: form.email.value,
-        message: form.message.value
-      };
-      fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: {"Content-Type":"application/json","Accept":"application/json"},
-        body: JSON.stringify(payload)
-      }).catch(()=>{});
-      form.reset();
-    });
+(function animate(){
+  const total = AUTO_REDIRECT_MS;
+  const start = performance.now();
+  function loop(t){
+    const elapsed = t - start;
+    const p = Math.min(1, elapsed / total);
+    if(!entered){
+      setProgress(p);
+      if(p < 1) requestAnimationFrame(loop);
+      else handleEnter();
+    }
+  }
+  requestAnimationFrame(loop);
+})();
+
+function handleEnter(){
+  if(entered) return;
+  entered = true;
+  setTimeout(()=>{ window.location.assign(DEST_URL); }, 200);
+}
+
+enterBtn.addEventListener('click', handleEnter);
+
   </script>
 </body>
 </html>
