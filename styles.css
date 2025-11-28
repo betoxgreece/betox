@@ -40,7 +40,7 @@ html, body {
 .site-header-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 14px 16px;
+  padding: 16px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -48,14 +48,16 @@ html, body {
 }
 
 .brand {
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #f2f2f2;
-  text-decoration: none;
-}
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     }
+
+.brand-logo {
+     height: 55px;   
+     width: auto;
+     display: block;
+     }
 
 .brand .mark {
   width: 28px;
