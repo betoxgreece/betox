@@ -32,6 +32,9 @@
      width: auto;
      display: block;
      }
+    brand .mark{width:30px;height:30px;display:grid;place-items:center;border-radius:9px;border:1px solid rgba(229,199,99,.45);background:rgba(24,24,24,.7)} 
+    .brand .mark svg{width:18px;height:18px;fill:var(--gold)} 
+    .brand .name{font-size:20px}
     .site-header{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:saturate(1.2) blur(8px);
       background:rgba(0,0,0,0);border-bottom:1px solid var(--line);transform:translateY(-100%);opacity:0;
       transition:transform .4s ease,opacity .4s ease,background .2s ease}
@@ -91,7 +94,7 @@
   <header class="site-header" id="siteHeader">
     <div class="site-header-inner">
       <a href="home.html" class="brand">
-          <img src="betoxwhitelogo.png" alt="Betox logo">
+          <img src="betoxwhitelogo.png" alt="Betox logo" class="brand-logo">
       </a>
       <nav aria-label="Κύριο μενού">
         <ul>
