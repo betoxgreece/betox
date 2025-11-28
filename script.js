@@ -34,9 +34,4 @@ function sendMailto(e){
   window.location.href = `mailto:info@betox.gr?subject=${subject}&body=${body}`;
   return false;
 }
-.site-header img.brand-logo {
-    height: 26px !important;
-    width: auto !important;
-    max-height: 26px !important;
-    object-fit: contain !important;
-}
+
