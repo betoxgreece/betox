@@ -23,12 +23,9 @@
       border-radius: 12px;
     }
  html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
 }
 .site-header.show {
   transform: translateY(0);
