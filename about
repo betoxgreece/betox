@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="el">
+ <link rel="icon" type="betoxx/png" sizes="32x32" href="/betoxx.png">
+ <link rel="icon" type="betoxx/png" sizes="16x16" href="/betoxx.png">
+<head>
+  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BETOX GREECE — Εποξειδικά Δάπεδα</title>
+  <meta name="description" content="Luxury εποξειδικά δάπεδα σε μαύρο/χρυσό/λευκό. 12-φωτογραφίες gallery, premium effects, έτοιμη φόρμα mailto." />
+  <link rel="stylesheet" href="styles.css?v=1">
+  <script src="main.js?v=1"></script>
+</head>
+<body class="bg">
+  <header class="site-header" id="siteHeader">
+    <div class="site-header-inner">
+      <a href="home.html" class="brand">
+          <img src="betoxx1.png" alt="Betox logo" class="brand-logo" style="height:55px;width:auto;max-height:55px;display:block;">
+      </a>
+    <nav aria-label="Κύριο μενού">
+      <ul>
+        <li><a href="#portfolio">Έργα</a></li>
+        <li><a href="#services">Υπηρεσίες</a></li>
+        <li><a href="#about">Ποιοι είμαστε</a></li>
+        <li><a href="contact.html">Επικοινωνία</a></li>
+      </ul>
+    </nav>
+
+    <button class="burger" id="burger" aria-label="Άνοιγμα μενού">
+      <span></span><span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <ul>
+      <li><a href="#portfolio">Έργα</a></li>
+      <li><a href="#services">Υπηρεσίες</a></li>
+      <li><a href="#about">Ποιοι είμαστε</a></li>
+      <li><a href="contact.html">Επικοινωνία</a></li>
+    </ul>
+  </div>
+</header>
